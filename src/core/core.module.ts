@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApplicationBootstrapOptions } from 'src/common/interfaces/application-bootstrap-option.interface';
 
@@ -19,7 +20,8 @@ export class CoreModule {
                 username: 'postgres',
                 autoLoadEntities: true,
                 synchronize: true
-            })
+            }),
+            MongooseModule.forRoot('mongodb://localhost:27017/alarms')
         ]
         : [];
 

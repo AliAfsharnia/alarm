@@ -4,14 +4,15 @@ import { AppService } from './app.service';
 import { AlarmModule } from './alarm/application/alarm.module';
 import { CoreModule } from './core/core.module';
 import { ApplicationBootstrapOptions } from './common/interfaces/application-bootstrap-option.interface';
-import { AlarmInfrastructureModule } from './alarm/infrastructure/alarms-infrastructure.modul';
+import { AlarmInfrastructureModule } from './alarm/infrastructure/alarms-infrastructure.module';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [CoreModule],
+  imports: [CoreModule, CqrsModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
+export class AppModule { 
   static register(options: ApplicationBootstrapOptions){
     return { 
       module: AppModule,

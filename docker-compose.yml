@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  event-store:
+    container_name: event-store
+    ports:
+      - 27018:27017
+    image: mongo:6.0.4
+    environment:
+      - MONGODB_DATABASE=vf-event-store
+    command: mongod --replSet vf-event-store-repl-set --bind_ip_all
+    volumes:
+      - ./scripts/event-store-mongo-init.js:/docker-entrypoint-initdb.d/mongo_init.js:ro
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

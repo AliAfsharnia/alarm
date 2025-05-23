@@ -1,20 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { AlarmRepository } from "src/alarm/application/ports/alarm.repository";
 import { AlarmEntity } from "../entities/alarm.entity";
 import { Repository } from "typeorm";
 import { Alarm } from "src/alarm/domain/alarm";
 import { AlarmMapper } from "../mappers/alarm.mapper";
+import { CreateAlarmRepository } from "src/alarm/application/ports/create-alarm.repository";
 
 @Injectable()
-export class ormAlarmRepository implements AlarmRepository {
+export class OrmCreateAlarmRepository implements CreateAlarmRepository {
     constructor(@InjectRepository(AlarmEntity) private readonly alarmRepository: Repository<AlarmEntity>){}
-
-    async findAll():Promise<Alarm[]>{
-        const entities = await this.alarmRepository.find()
-
-        return entities.map((item) => AlarmMapper.toDomain(item))
-    }
 
     async save(alarm: Alarm): Promise<Alarm> {
         const persistenceModel = AlarmMapper.toPersistence(alarm);

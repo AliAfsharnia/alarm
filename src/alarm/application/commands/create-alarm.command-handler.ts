@@ -1,9 +1,7 @@
-import { CommandHandler, EventBus, ICommandHandler } from "@nestjs/cqrs";
+import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { CreateAlarmCommand } from "./create-alarm.command";
 import { Logger } from "@nestjs/common";
 import { AlarmFactory } from "src/alarm/domain/factories/alarm.factory";
-import { AlarmCreatedEvent } from "src/alarm/domain/events/alarm-created.event";
-import { CreateAlarmRepository } from "../ports/create-alarm.repository";
 
 @CommandHandler(CreateAlarmCommand)
 export class CreateAlarmCommandHandler
@@ -12,9 +10,8 @@ export class CreateAlarmCommandHandler
     private readonly logger = new Logger(CreateAlarmCommandHandler.name)  
  
     constructor(
-        private readonly alarmRepository: CreateAlarmRepository,
+        private readonly eventPublisher: EventPublisher,
         private readonly alarmFactory: AlarmFactory,
-        private readonly eventBus: EventBus
     ){}
 
     async execute(command: CreateAlarmCommand){
@@ -23,11 +20,10 @@ export class CreateAlarmCommandHandler
         );
 
         const alarm = this.alarmFactory.create(command.name, command.severity, command.triggeredAt, command.items);
-        const newAlarm = await this.alarmRepository.save(alarm);
+        
+        this.eventPublisher.mergeObjectContext(alarm);
+        alarm.commit();
 
-        //this is not best way to dispatch events
-
-        await this.eventBus.publish(new AlarmCreatedEvent(alarm))
-        return this.alarmRepository.save(alarm);
+        return alarm;
     } 
 }

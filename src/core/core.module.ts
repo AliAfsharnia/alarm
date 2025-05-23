@@ -2,8 +2,17 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApplicationBootstrapOptions } from 'src/common/interfaces/application-bootstrap-option.interface';
+import { EVENT_STORE_CONNECTION } from './core.constance';
 
-@Module({})
+@Module({
+    imports: [
+        MongooseModule.forRoot('mongodb://localhost:27018/vf-event-store', {
+            connectionName: EVENT_STORE_CONNECTION,
+            directConnection: true,
+            replicaSet: 'vf-event-store-repl-set'
+        })
+    ]
+})
 export class CoreModule {
     static forRoot(options: ApplicationBootstrapOptions){
         const imports = 

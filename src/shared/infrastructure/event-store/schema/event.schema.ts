@@ -15,7 +15,7 @@ export class Event {
     type: string;
 
     @Prop()
-    position: string;
+    position: number;
 
     @Prop({
         type: SchemaTypes.Mixed,

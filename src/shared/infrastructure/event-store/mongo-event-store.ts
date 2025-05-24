@@ -33,7 +33,7 @@ export class MongoEventStore {
 
             const UNIQUE_CONSTRAINT_ERROR_CODE = 11000;
             if(error?.code === UNIQUE_CONSTRAINT_ERROR_CODE){
-                this.logger.error(`Event could not be persisted. Aggergate is stale.`);
+                this.logger.error(`Event could not be persisted. Aggregate is stale.`);
                 console.error(error.writeErrors?.[0]?.err?.errmsg);
             } else {
                 throw error

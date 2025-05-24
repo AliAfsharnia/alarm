@@ -14,30 +14,32 @@ export class EventSerializer {
         }
 
         const aggregateId = dispatcher.id;
+        const eventData = this.toJSON(event);
+        
         return {
             streamId: aggregateId,
             position: dispatcher.version.value + 1,
             type: eventType,
-            data: this.toJSON(event),
-    }
-}
-
-private toJSON<T>(data: T) {
-    if(typeof data != 'object' || data === null){
-        return data;
+            data: eventData,
+        };
     }
 
-    if('toJSON' in data && typeof data.toJSON === 'function'){
-        return data.toJSON();
-    }
+    private toJSON<T>(data: T) {
+        if(typeof data != 'object' || data === null){
+            return data;
+        }
 
-    if(Array.isArray(data)) {
-        return data.map((item) => this.toJSON(item));
-    }
+        if('toJSON' in data && typeof data.toJSON === 'function'){
+            return data.toJSON();
+        }
 
-    return Object.entries(data).reduce((acc, [key, value]) => {
-        acc[key] = this.toJSON(value);
-        return acc
-    });
+        if(Array.isArray(data)) {
+            return data.map((item) => this.toJSON(item));
+        }
+
+        return Object.entries(data).reduce((acc, [key, value]) => {
+            acc[key] = this.toJSON(value);
+            return acc;
+        }, {});
     }
 }

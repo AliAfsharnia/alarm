@@ -5,7 +5,7 @@ import { EventSerializer } from "../serializers/event-serializer";
 import { VersionedAggregateRoot } from "src/shared/domain/aggregate-root";
 
 @Injectable()
-export class EventStorePublishe implements OnApplicationBootstrap, IEventPublisher {
+export class EventStorePublisher implements OnApplicationBootstrap, IEventPublisher {
     constructor(
         private readonly eventStore: MongoEventStore,
         private readonly eventBus: EventBus,
@@ -30,8 +30,8 @@ export class EventStorePublishe implements OnApplicationBootstrap, IEventPublish
     ) {
         const serializeEvents = events
         .map((event) => this.eventSerializer.serialize(event, dispatcher))
-        .map((serializeableEvent, index) => ({
-            ...serializeableEvent,
+        .map((serializableEvent, index) => ({
+            ...serializableEvent,
             position: dispatcher.version.value + index + 1
         }));
 

@@ -4,8 +4,10 @@ import mongoose from "mongoose";
 import { EventSchema } from "./event-store/schema/event.schema";
 import { EVENT_STORE_CONNECTION } from "src/core/core.constance";
 import { EventSerializer } from "./event-store/serializers/event-serializer";
-import { EventStorePublishe } from "./event-store/publishers/event-store.publisher";
+import { EventStorePublisher } from "./event-store/publishers/event-store.publisher";
 import { MongoEventStore } from "./event-store/mongo-event-store";
+import { EventBridge } from "./event-store/event-bridge";
+import { EventDeserializer } from "./event-store/deserializers/event-deserializer";
 
 @Module({
     imports: [
@@ -14,6 +16,6 @@ import { MongoEventStore } from "./event-store/mongo-event-store";
             EVENT_STORE_CONNECTION,
         ),
     ],
-    providers: [EventSerializer, EventStorePublishe, MongoEventStore],
+    providers: [EventSerializer, EventStorePublisher, MongoEventStore, EventBridge, EventDeserializer],
 })
 export class SharedInfraStructureModule{}

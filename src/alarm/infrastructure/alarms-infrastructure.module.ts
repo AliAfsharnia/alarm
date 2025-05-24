@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { OrmAlarmPersistenceModule } from "./orm/orm-persistence.module";
-import { inMemoryAlarmPersistenceModule } from "./in-memory/in-memory-persistance.module";
 import { SharedModule } from "src/shared/shared.module";
+import { inMemoryAlarmPersistenceModule } from "./in-memory/in-memory-persistence.module";
 
 @Module({imports:[SharedModule], exports: [SharedModule]})
 export class AlarmInfrastructureModule{

@@ -19,7 +19,7 @@ export class CreateAlarmCommandHandler
             `Processing "CreateAlarmCommand": ${JSON.stringify(command)}`
         );
 
-        const alarm = this.alarmFactory.create(command.name, command.severity, command.triggeredAt, command.items);
+        const alarm = this.alarmFactory.create(command.name, command.severity, command.triggeredAt, command.isAcknowledged, command.items);
         
         this.eventPublisher.mergeObjectContext(alarm);
         alarm.commit();

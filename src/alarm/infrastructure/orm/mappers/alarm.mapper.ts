@@ -23,6 +23,7 @@ export class AlarmMapper {
             (item) => new AlarmItem(item.id, item.name, item.type)
         );
 
+        console.log('to domain ', alarmModel)
         return alarmModel;
     }
 
@@ -43,6 +44,8 @@ export class AlarmMapper {
                 return itemEntity
             }
         );
+
+        console.log('to persistence ', entity)
         return entity
     }
 }

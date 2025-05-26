@@ -10,7 +10,7 @@ export class AlarmController {
   @Post()
   create(@Body() createAlarmDto: CreateAlarmDto) {
     return this.alarmService.create(
-      new CreateAlarmCommand(createAlarmDto.name, createAlarmDto.severity, createAlarmDto.triggeredAt, createAlarmDto.items)
+      new CreateAlarmCommand(createAlarmDto.name, createAlarmDto.severity, createAlarmDto.triggeredAt, createAlarmDto.isAcknowledged, createAlarmDto.items)
     );
   }
 
@@ -18,4 +18,10 @@ export class AlarmController {
   findAll() {
     return this.alarmService.findAll();
   }
+
+  @Patch(':id/acknowledged')
+  acknowledged(@Param('id') id: string) {
+    return this.alarmService.acknowledged(id);
+  }
+
 }

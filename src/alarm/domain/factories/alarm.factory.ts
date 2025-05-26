@@ -11,6 +11,7 @@ export class AlarmFactory{
         name: string, 
         severity: string, 
         triggeredAt: Date, 
+        isAcknowledged: boolean,
         items: Array<{ name: string; type: string}>,
     ){
         const alarmId = randomUUID();
@@ -18,6 +19,7 @@ export class AlarmFactory{
         const alarm =  new Alarm(alarmId);
         alarm.name = name;
         alarm.severity = alarmSeverity;
+        alarm.isAcknowledged = isAcknowledged;
         alarm.triggeredAt = triggeredAt
         items.map((item) => new AlarmItem(randomUUID(), item.name, item.type))
         .forEach((item) => alarm.addAlarmItem(item));

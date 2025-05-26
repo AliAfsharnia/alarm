@@ -3,6 +3,7 @@ export class CreateAlarmCommand{
         public readonly name: string, 
         public readonly severity: string,
         public readonly triggeredAt: Date,
+        public readonly isAcknowledged: boolean,
         public readonly items: Array<{
             name: string;
             type: string;

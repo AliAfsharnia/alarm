@@ -34,9 +34,9 @@ export class EventBridge
 
     handleEventStoreChange(change: ChangeStreamInsertDocument<EventDocument>){
         const insertedEvent = change.fullDocument;
-        console.debug(insertedEvent);
+
         const eventInstance = this.eventDeserializer.deserializer(insertedEvent);
-        console.debug(eventInstance);
+
         this.eventBus.subject$.next(eventInstance.data);
     }
 }

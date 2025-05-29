@@ -31,4 +31,4 @@ $ npm run test:cov
 ```
 
 ## Doc
-- [google doc about Hexagonal Architecture in NestJS app](https://docs.google.com/document/d/1DWYTVC0u5Mwrpzry1eCa0uybJuItWF9c5b8NRiPOY7I/edit?usp=sharing)
+- [google doc about Architecture in NestJS app](https://docs.google.com/document/d/1DWYTVC0u5Mwrpzry1eCa0uybJuItWF9c5b8NRiPOY7I/edit?usp=sharing)
